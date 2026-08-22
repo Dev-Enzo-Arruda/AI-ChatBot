@@ -1,51 +1,46 @@
-<!doctype html>
-<html lang="pt-br">
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aula GPT</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot de Atendimento - Gemini</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <header>
-        <h1>Aula GPT</h1>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Material Didático</a></li>
-            <li><a href="#">Ajuda</a></li>
-        </ul>
-    </header>
-
-    <main>
-
-        <h2>Este é um site de exemplo para o curso:</h2>
-        <p>
-            Inteligências Artificiais Generativa Aplicada a Programação - ChatGPT
-            (SENAI, professor Wellifabio)
-        </p>
-
-        <div class="divantesresposta">
-            <button onclick="funcao()" class="resposta">oi</button>
-
-            <div id="resposta" class="divresposta"></div>
+    <body>
+    <!-- Novo botão de alternância de tema -->
+    <button id="theme-toggle" class="theme-toggle" title="Alternar Tema">🌙</button>
+    
+    <div class="container">
+        <!-- Tela inicial para inserir a API Key -->
+        <div id="config-screen" class="screen active">
+            <h1>Configuração do Chatbot</h1>
+            <p>Para utilizar este chatbot, insira sua chave de API do Google Gemini. Sua chave não será salva em nenhum servidor, apenas no seu navegador.</p>
+            <input type="password" id="api-key-input" placeholder="Insira sua API Key aqui...">
+            <button id="save-key-btn">Salvar e Entrar</button>
+            <p class="small-text">Você pode gerar uma chave gratuitamente no <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>.</p>
         </div>
 
-    </main>
+        <!-- Tela do Chat -->
+        <div id="chat-screen" class="screen">
+            <div class="chat-header">
+                <h2>Assistente Virtual</h2>
+                <button id="logout-btn">Sair / Trocar Chave</button>
+            </div>
+            
+            <div id="chat-box" class="chat-box">
+                <div class="message bot">
+                    <div class="text">Olá! Sou o assistente virtual. Como posso ajudar você hoje?</div>
+                </div>
+            </div>
 
-    <footer>
-        <h3>Redes sociais</h3>
-        <ul>
-            <li class="tirar-decoracao"><a href="#">Instagram</a></li>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Linkedin</a></li>
-        </ul>
-        <br />
-        <i>by Enzo ©, todos os direitos reservados</i>
-    </footer>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Digite sua mensagem..." autocomplete="off">
+                <button id="send-btn">Enviar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
