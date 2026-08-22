@@ -48,3 +48,14 @@ O chatbot utiliza a API REST do Google Gemini para processar mensagens, mantendo
 1. **Clone o repositório:**
    ```bash
    git clone [https://github.com/Dev-Enzo-Arruda/SENAI-chat-falso-gpt-2026.git](https://github.com/Dev-Enzo-Arruda/SENAI-chat-falso-gpt-2026.git)
+
+2. **Abra o arquivo index.html com o seu navegador preferido (exemplo: Google chrome)**
+
+3. **Coloque sua Chave API**
+
+## 🌐 Como Executar o Projeto Via WEB
+
+1. **Acesse o link do Git Pages**
+    [https://dev-enzo-arruda.github.io/SENAI-chat-falso-gpt-2026/]
+
+2. **Coloque sua Chave API**
