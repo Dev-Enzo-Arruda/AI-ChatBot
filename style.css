@@ -132,6 +132,40 @@ body {
     border-bottom-left-radius: 2px;
 }
 
+.message-heading,
+.message-list-item {
+    display: block;
+}
+
+.message-heading {
+    margin-bottom: 4px;
+}
+
+.message-list-item {
+    margin-left: 4px;
+}
+
+.message.bot code {
+    padding: 2px 5px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    font-size: 0.9em;
+}
+
+.message.bot pre {
+    margin: 6px 0;
+    padding: 8px;
+    overflow-x: auto;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+}
+
+.message.bot pre code {
+    padding: 0;
+    background: none;
+}
+
 .input-area {
     display: flex;
     gap: 10px;
@@ -226,6 +260,11 @@ body.dark-mode .input-area input {
 body.dark-mode .message.bot .text {
     background-color: #2d2d2d;
     color: #e0e0e0;
+}
+
+body.dark-mode .message.bot code,
+body.dark-mode .message.bot pre {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Linha separadora do cabeçalho */

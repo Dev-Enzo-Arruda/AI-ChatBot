@@ -17,6 +17,14 @@ let chatHistory = [];
 // ==========================================
 const systemInstruction = "Você é um assistente virtual prestativo de uma loja online de eletrônicos. Você ajuda a tirar dúvidas sobre produtos, agendar suportes técnicos e dar informações sobre frete. Seja sempre educado, conciso e profissional.";
 
+// Tenta modelos alternativos quando o principal estiver indisponível ou sem cota.
+const geminiModels = [
+    'gemini-3.6-flash',
+    'gemini-3.6-flash-lite',
+    'gemini-3.5-flash',
+    'gemini-3.5-flash-lite'
+];
+
 // Verifica se já existe uma chave salva ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
     const savedKey = localStorage.getItem('gemini_api_key');
@@ -65,13 +73,56 @@ function showConfigScreen() {
     apiKeyInput.value = '';
 }
 
+function escapeHtml(text) {
+    const htmlEntities = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, (character) => htmlEntities[character]);
+}
+
+function formatBotMessage(text) {
+    const codeBlocks = [];
+    let html = escapeHtml(text).replace(/```([\s\S]*?)```/g, (_, code) => {
+        const placeholder = `@@CODE_BLOCK_${codeBlocks.length}@@`;
+        codeBlocks.push(`<pre><code>${code.trim()}</code></pre>`);
+        return placeholder;
+    });
+
+    html = html
+        .replace(/^### (.+)$/gm, '<strong class="message-heading">$1</strong>')
+        .replace(/^## (.+)$/gm, '<strong class="message-heading">$1</strong>')
+        .replace(/^# (.+)$/gm, '<strong class="message-heading">$1</strong>')
+        .replace(/(^|\n)\s*[-*]\s+(.+)/g, '$1<span class="message-list-item">• $2</span>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.+?)__/g, '<strong>$1</strong>')
+        .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+        .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>')
+        .replace(/(^|[^_])_([^_\n]+)_(?!_)/g, '$1<em>$2</em>')
+        .replace(/\n/g, '<br>');
+
+    codeBlocks.forEach((codeBlock, index) => {
+        html = html.replace(`@@CODE_BLOCK_${index}@@`, codeBlock);
+    });
+
+    return html;
+}
+
 function addMessageToUI(text, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', sender);
     
     const textDiv = document.createElement('div');
     textDiv.classList.add('text');
-    textDiv.textContent = text;
+    if (sender === 'bot') {
+        textDiv.innerHTML = formatBotMessage(text);
+    } else {
+        textDiv.textContent = text;
+    }
     
     messageDiv.appendChild(textDiv);
     chatBox.appendChild(messageDiv);
@@ -92,9 +143,11 @@ async function sendMessage() {
     sendBtn.disabled = true;
     userInput.disabled = true;
 
+    let typingId = null;
+
     try {
         // Mostra digitando
-        const typingId = "typing-" + Date.now();
+        typingId = "typing-" + Date.now();
         const typingDiv = document.createElement('div');
         typingDiv.classList.add('message', 'bot');
         typingDiv.id = typingId;
@@ -102,42 +155,50 @@ async function sendMessage() {
         chatBox.appendChild(typingDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Requisição para a API REST do Gemini (Modelo Flash 1.5 - rápido e barato/gratuito)
-        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        const requestBody = {
+            system_instruction: {
+                parts: [{ text: systemInstruction }]
             },
-            body: JSON.stringify({
-                system_instruction: {
-                    parts: [{ text: systemInstruction }]
+            contents: chatHistory
+        };
+        let lastErrorMessage = 'Erro desconhecido.';
+        let botResponseText = '';
+
+        for (const model of geminiModels) {
+            const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                contents: chatHistory
-            })
-        });
+                body: JSON.stringify(requestBody)
+            });
+            const data = await response.json();
 
-        const data = await response.json();
-        
+            if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                botResponseText = data.candidates[0].content.parts[0].text;
+                break;
+            }
+
+            lastErrorMessage = data.error?.message || `O modelo ${model} não respondeu.`;
+        }
+
         // Remove "Digitando..."
-        document.getElementById(typingId).remove();
+        document.getElementById(typingId)?.remove();
 
-        if (response.ok && data.candidates && data.candidates.length > 0) {
-            const botResponseText = data.candidates[0].content.parts[0].text;
-            
+        if (botResponseText) {
             // Adiciona resposta na UI e no Histórico
             addMessageToUI(botResponseText, 'bot');
             chatHistory.push({ role: "model", parts: [{ text: botResponseText }] });
         } else {
-            // Tratamento de Erro (Ex: Chave inválida)
-            const errorMsg = data.error ? data.error.message : "Erro desconhecido.";
-            addMessageToUI(`Erro na API: ${errorMsg}`, 'bot');
+            addMessageToUI(`Não foi possível responder agora. Tentamos os modelos alternativos. Detalhes: ${lastErrorMessage}`, 'bot');
             chatHistory.pop(); // Remove a pergunta do histórico já que falhou
         }
 
     } catch (error) {
+        document.getElementById(typingId)?.remove();
         addMessageToUI("Erro de conexão. Verifique sua internet.", 'bot');
+        chatHistory.pop();
     } finally {
         sendBtn.disabled = false;
         userInput.disabled = false;
