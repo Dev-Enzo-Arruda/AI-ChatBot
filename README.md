@@ -1,37 +1,33 @@
-# 🤖 Chatbot IA com Google Gemini & GitHub Pages
+# 🤖 Chatbot IA com Google Gemini
 
-> **Projeto prático referente à Aula04** — Aplicação web estática que integra a API do Google Gemini para criar um assistente virtual interativo, responsivo e personalizável.
+> **Projeto prático Atendente de IA** — Aplicação web estática que integra a API do Google Gemini para criar um assistente virtual interativo, responsivo e personalizável.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlecloud&logoColor=white)
-![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)
 
 ---
 
-## 📌 Sobre o Projeto
+## Sobre o Projeto
 
-Este projeto foi desenvolvido com o objetivo de demonstrar a integração de modelos de **Inteligência Artificial Generativa (NLP)** em aplicações web client-side (frontend puro), permitindo a publicação gratuita através do **GitHub Pages** sem a necessidade de um servidor backend.
+Este projeto foi desenvolvido com o objetivo de demonstrar a integração de modelos de **Inteligência Artificial Generativa (NLP)** em aplicações web client-side.
 
 O chatbot utiliza a API REST do Google Gemini para processar mensagens, mantendo o histórico da conversa e seguindo diretrizes comportamentais predefinidas (**System Instructions**).
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-* 🗝️ **Chave de API Dinâmica:** O usuário insere a própria API Key no navegador, garantindo autonomia e custos zerados para a hospedagem do site ![pegue a sua aqui](https://aistudio.google.com/app/api-keys).
-* 🔒 **Privacidade Local:** A chave e as preferências de tema são salvas estritamente no navegador do cliente.
-* 🌓 **Modo Claro / Escuro Inteligente:**
-  * Alternância manual via botão interativo.
-  * Detecção automática do tema padrão do Sistema Operacional.
-* 💬 **Interface Estilo Chat Application:** Design moderno, responsivo e adaptado para dispositivos móveis e desktop.
-* 🧠 **Modelo Personalizado (Persona):** Respostas guiadas por instruções de sistema para simular um atendente virtual profissional.
-* ⚡ **Modelo Utilizado:** Conectado ao endpoint oficial e atualizado.
+* **Chave de API Dinâmica:** O usuário insere a própria API Key no navegador, garantindo autonomia e custos zerados para a hospedagem do site !(pegue a sua aqui)[https://aistudio.google.com/app/api-keys].
+* **Privacidade Local:** A chave e as preferências de tema são salvas estritamente no navegador do cliente.
+* **Interface Estilo Chat Application:** Design moderno, responsivo e adaptado para dispositivos móveis e desktop.
+* **Modelo Personalizado (Persona):** Respostas guiadas por instruções de sistema para simular um atendente virtual profissional.
+* **Modelo Utilizado:** Conectado ao endpoint oficial e atualizado.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 | Tecnologia | Descrição |
 | :--- | :--- |
@@ -43,7 +39,7 @@ O chatbot utiliza a API REST do Google Gemini para processar mensagens, mantendo
 
 ---
 
-## 🚀 Como Executar o Projeto Localmente
+## Como Executar o Projeto Localmente
 
 1. **Clone o repositório:**
    ```bash
@@ -53,7 +49,7 @@ O chatbot utiliza a API REST do Google Gemini para processar mensagens, mantendo
 
 3. **Coloque sua Chave API**
 
-## 🌐 Como Executar o Projeto Via WEB
+## Como Executar o Projeto Via WEB
 
 1. **Acesse o link do Git Pages**
     [https://dev-enzo-arruda.github.io/SENAI-chat-falso-gpt-2026/]
