@@ -19,7 +19,7 @@ O chatbot utiliza a API REST do Google Gemini para processar mensagens, mantendo
 
 ## Funcionalidades
 
-* **Chave de API Dinâmica:** O usuário insere a própria API Key no navegador, garantindo autonomia e custos zerados para a hospedagem do site [pegue a sua aqui](https://aistudio.google.com/app/api-keys.)
+* **Chave de API Dinâmica:** O usuário insere a própria API Key no navegador, garantindo autonomia e custos zerados para a hospedagem do site [pegue a sua aqui](https://aistudio.google.com/app/api-keys)
 * **Privacidade Local:** A chave e as preferências de tema são salvas estritamente no navegador do cliente.
 * **Interface Estilo Chat Application:** Design moderno, responsivo e adaptado para dispositivos móveis e desktop.
 * **Modelo Personalizado (Persona):** Respostas guiadas por instruções de sistema para simular um atendente virtual profissional.
